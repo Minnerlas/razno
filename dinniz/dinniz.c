@@ -21,6 +21,9 @@ struct dniz *napniz(enum tip tip){
 		case NDOUBLE:
 			vel=sizeof(double);
 			break;
+		case NPOK:
+			vel=sizeof(void*);
+			break;
 		default:
 			return NULL;
 	}
@@ -40,6 +43,7 @@ union pok{
 	int    *br;
 	float  *fl;
 	double *db;
+	void  **pok;
 };
 
 int dodniz(struct dniz *niz, void *vred){
@@ -108,6 +112,21 @@ int dodniz(struct dniz *niz, void *vred){
 			niz->duz++;
 			break;
 
+		case NPOK:
+			p.pok=niz->niz;
+			if(niz->duz==niz->stvduz){
+				niz->stvduz*=2;
+				void **t1=malloc(niz->stvduz*sizeof(void*));
+				if(t1==NULL)
+					return 0;
+				for(i=0; i<niz->duz; t1[i]=p.pok[i],i++);
+				free(p.pok);
+				p.pok=niz->niz=t1;
+			}
+			p.pok[niz->duz]=*(void**)vred;
+			niz->duz++;
+			break;
+
 		default:
 			return 0;
 	}
@@ -133,6 +152,9 @@ void *nizcl(struct dniz *niz, int n){
 		case NDOUBLE:
 			p.db=niz->niz;
 			return (void*)(p.db+n);
+		case NPOK:
+			p.pok=niz->niz;
+			return (void*)(p.pok+n);
 		default:
 			return NULL;
 	}

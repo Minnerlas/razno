@@ -1,18 +1,12 @@
 #ifndef DINNIZ_H
 #define DINNIZ_H
 
+#include "../tipovi.h"
 //Makroi
 
 #define POC_DUZ 8
 
 //Tipovi
-
-enum tip {
-	NCHAR,
-	NINT,
-	NFLOAT,
-	NDOUBLE,
-};
 
 struct dniz {
 	void *niz;
