@@ -34,7 +34,6 @@ struct hclan {
 struct hmapa*	naphmapa();
 int 			dodhmapa(struct hmapa* h, const char* ime, enum tip tip, void* v);
 struct hclan*	nadjhmapa(struct hmapa* h, const char* ime);
-uint64_t hes(const char *s); // Treba da bude static
 void hstampaj(struct hmapa *mapa);
 
 #endif /* HMAPA_H */
