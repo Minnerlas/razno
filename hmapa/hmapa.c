@@ -12,7 +12,7 @@ void hstampaj(struct hmapa *mapa){
 			printf("(null)\n");
 		else{
 			struct hclan *t=mapa->niz[i];
-			printf("\"%s\", hes: %llu, vred: %d\n", t->ime, t->hesv, t->vred.i);
+			printf("\"%s\", heš: %llu, vred: %d\n", t->ime, t->hesv, t->vred.i);
 		}
 	}
 
