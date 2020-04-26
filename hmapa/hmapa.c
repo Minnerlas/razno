@@ -19,8 +19,8 @@ void hstampaj(struct hmapa *mapa){
 }
 
 static uint64_t hes(const char *s) { // Treba da bude static
-	const int p = 31;
-	const int m = 1e9 + 9;
+	const uint64_t	p = 31;
+	const uint64_t m = 1e9 + 9;
 	uint64_t hash_value = 0;
 	uint64_t p_pow = 1;
 	for (char *c = (char*)s; *c; c++) {
