@@ -5,14 +5,14 @@
 #include <string.h>
 #include <stdint.h>
 
-void hstampaj(struct hmapa *mapa){
-	for(int i=0; i < mapa->stvduz; i++){
+void hstampaj(struct hmapa *mapa) {
+	for(int i=0; i < mapa->stvduz; i++) {
 		printf("%4d:\t", i);
 		if(!mapa->niz[i])
 			printf("(null)\n");
-		else{
+		else {
 			struct hclan *t=mapa->niz[i];
-			printf("\"%s\", heš: %llu, vred: %d\n", t->ime, t->hesv, t->vred.i);
+			printf("\"%s\", heš: %lu, vred: %d\n", t->ime, t->hesv, t->vred.i);
 		}
 	}
 
@@ -30,12 +30,12 @@ static uint64_t hes(const char *s) { // Treba da bude static
 	return hash_value;
 }
 
-struct hmapa* naphmapa(){
+struct hmapa* naphmapa() {
 	struct hmapa *h = malloc(sizeof(*h));
 	if(h){
 		h->duz = 0;
 		h->stvduz = HPOCDUZ;
-		if(!(h->niz = malloc(HPOCDUZ*sizeof(struct hclan*)))){
+		if(!(h->niz = malloc(HPOCDUZ*sizeof(struct hclan*)))) {
 			free(h);
 			return NULL;
 		}
@@ -45,7 +45,7 @@ struct hmapa* naphmapa(){
 	return h;
 }
 
-int dodhmapa(struct hmapa* h, const char* ime, enum tip tip, void* v){
+int dodhmapa(struct hmapa* h, const char* ime, enum tip tip, void* v) {
 	struct hclan* hc = malloc(sizeof(*hc));
 	if(!hc)
 		return -1;
@@ -77,14 +77,14 @@ int dodhmapa(struct hmapa* h, const char* ime, enum tip tip, void* v){
 
 	strcpy(hc->ime, ime);
 
-	if(h->duz >= (h->stvduz*3/4)){
+	if(h->duz >= (h->stvduz*3/4)) {
 		struct hclan **t = malloc(h->stvduz*2*sizeof(h->niz));
 		if(!t)
 			return -1;
 
 		struct hclan *t1;
 		for(int i=0; i<h->stvduz*2; t[i++]=NULL);
-		for(int i=0; i<h->stvduz; i++){
+		for(int i=0; i<h->stvduz; i++) {
 			if(!(t1=h->niz[i]))
 				continue;
 			int ind;
@@ -101,7 +101,7 @@ int dodhmapa(struct hmapa* h, const char* ime, enum tip tip, void* v){
 	hc->hesv = hes(ime);
 	int i = hc->hesv % h->stvduz;
 	for(; h->niz[i]; i = (i+1)%h->stvduz)
-		if(!strcmp(ime, h->niz[i]->ime)){
+		if(!strcmp(ime, h->niz[i]->ime)) {
 			free(hc->ime);
 			free(hc);
 			return -1;
@@ -113,7 +113,7 @@ int dodhmapa(struct hmapa* h, const char* ime, enum tip tip, void* v){
 	return 0;
 }
 
-struct hclan* nadjhmapa(struct hmapa* h, const char* ime){
+struct hclan* nadjhmapa(struct hmapa* h, const char* ime) {
 	uint64_t hesv = hes(ime);
 	int i, duz = 0;
 	struct hclan* t;
@@ -121,7 +121,7 @@ struct hclan* nadjhmapa(struct hmapa* h, const char* ime){
 		return NULL;
 	for(i = hesv % h->stvduz, t = h->niz[i];
 			(t) && (duz < h->stvduz) && (t->hesv != hesv) && (strcmp(t->ime, ime)); 
-			i++, t = h->niz[i], duz++){
+			i++, t = h->niz[i], duz++) {
 
 		//printf("h: %llu %llu %d\n", t->hesv, hesv, strcmp(t->ime, ime));
 	}
